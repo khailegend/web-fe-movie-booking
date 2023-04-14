@@ -3,11 +3,29 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import reduxThunk from "redux-thunk";
+import rootReducer from "./redux/reducers/index";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+const store = createStore(rootReducer, applyMiddleware(reduxThunk));
+
+const theme = createTheme({
+  // palette: {
+  //   background: {
+  //     paper: 'blue'
+  //   }
+  // }
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+    <ThemeProvider theme={theme}>
+        <App />
+    </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );
 
